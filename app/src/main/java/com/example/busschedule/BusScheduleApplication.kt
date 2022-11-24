@@ -1,4 +1,7 @@
 package com.example.busschedule
 
-class BusScheduleApplication {
+import android.app.Application
+
+class BusScheduleApplication : Application() {
+    
 }
