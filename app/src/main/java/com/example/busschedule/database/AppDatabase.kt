@@ -7,7 +7,8 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun scheduleDao(): ScheduleDao
 
     companion object {
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
     }
-
 
 }
