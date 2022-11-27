@@ -29,6 +29,10 @@ class BusStopAdapter(private val onItemClicked: (Schedule) -> Unit) : ListAdapte
         }
         return viewHolder
     }
+    override fun onBindViewHolder(holder: BusStopViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
 
     class BusStopViewHolder(private var binding: BusStopItemBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
