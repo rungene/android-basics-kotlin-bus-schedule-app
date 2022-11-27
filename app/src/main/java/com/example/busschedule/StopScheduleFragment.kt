@@ -25,6 +25,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.databinding.StopScheduleFragmentBinding
 import com.example.busschedule.viewmodels.BusScheduleViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class StopScheduleFragment: Fragment() {
 
@@ -69,6 +72,16 @@ class StopScheduleFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val busStopAdapter = BusStopAdapter({})
+        recyclerView.adapter = busStopAdapter
+// submitList() is a call that accesses the database. To prevent the
+// call from potentially locking the UI, you should use a
+// coroutine scope to launch the function. Using GlobalScope is not
+// best practice, and in the next step we'll see how to improve this.
+        GlobalScope.launch(Dispatchers.IO) {
+            busStopAdapter.submitList(viewModel.scheduleForStopName(stopName))
+        }
+
     }
 
     override fun onDestroyView() {
